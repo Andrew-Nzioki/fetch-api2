@@ -10,17 +10,74 @@
 <body>
     <p> Animals Fetch Api</p>
     <button id="getText">Get text</button>
-    <div id="image">
+    <button id="getUsers">Get Users</button>
+    <button id="getPosts">Get api data</button>
+    <hr>
+    
+    <div id="output">
         <!-- content here -->
+
     </div>
+    <form id="addPost">
+        <div>
+            <input type="text" id="image" placeholder="image">
+        </div>
+        <div>
+            <input type="text" id="votes" placeholder="votes">
+        </div>
+        <input type="submit" value="submit">
+    </form>
     <script>
-        document.getElementById('getText').addEventListener('click',getText);
-        function getText(){
-            fetch('sample.txt')
-            .then(function(res){
-                console.log(res)
+        //document.getElementById('getText').addEventListener('click',getText);
+        document.getElementById('getUsers').addEventListener('click',getUsers);
+        //document.getElementById('getPosts').addEventListener('click',getPosts);
+        document.getElementById('addPost').addEventListener('submit',addPosts);
+ function addPosts(e){
+    e.preventDefault();
+    let image=document.getElementById('image').value;
+    let votes=document.getElementById('votes').value;
+    fetch(' http://localhost:3000/characters',{
+        method:'POST',
+        headers:{
+            'Accept':'application/json,text/plain, */*',
+            'Content-type':'application/json'
+        },
+        body:JSON.stringify({image:image,votes:votes})
+    })
+    .then((res)=>res.json())
+    .then(data=>{
+        console.log(data  )
+    })
+ }
+
+        function getUsers(){
+            fetch('http://localhost:3000/characters')
+            .then(res=>res.json())
+            .then((data)=>{
+                let output=`<h2>Animals</h2>`
+                data.forEach(function(animal){
+                    output+=`
+                    <ul>
+                        <li>ID:${animal.id}</li>
+                        <li>Name:${animal.name}</li>
+                        <li>Votes:${animal.votes}</li>
+                        </ul>
+                        `;
+                });
+                document.getElementById('output').innerHTML=output;
             })
         }
+
+        // function getText(){
+        //     fetch('http://localhost:3000/characters')
+        //     .then((res)=>res.json())
+        //     .then((data)=> {
+                
+        //         console.log(data)
+        //     document.getElementById('image').innerHTML=data.forEach(data=>data.name);
+            
+        //     })
+        //     }
     </script>
 </body>
 </html>
