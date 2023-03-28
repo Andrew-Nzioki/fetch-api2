@@ -4,11 +4,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Fetch APi</title>
 </head>
 <body>
+    <p> Animals Fetch Api</p>
+    <button id="getText">Get text</button>
     <div id="image">
         <!-- content here -->
     </div>
+    <script>
+        document.getElementById('getText').addEventListener('click',getText);
+        function getText(){
+            fetch('sample.txt')
+            .then(function(res){
+                console.log(res)
+            })
+        }
+    </script>
 </body>
 </html>
